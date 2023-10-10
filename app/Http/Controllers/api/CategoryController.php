@@ -13,6 +13,10 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     function __construct() {
+        $this->middleware('auth:sanctum')->only('store', 'update', 'destroy');
+    }
     public function index()
     {
         $categories = Category::all();
