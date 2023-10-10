@@ -22,6 +22,7 @@ class ProductResource extends JsonResource
             "price" => $this->price,
             "image" => $this->image,
             "description" => $this->description,
+            "creator_id" => $this->creator_id,
             "category" => new CategoryResource($this->category),
             "categoryName" => $this->category ? $this->category->name : null
         ];

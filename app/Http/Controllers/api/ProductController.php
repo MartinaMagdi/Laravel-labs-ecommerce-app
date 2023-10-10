@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -13,6 +14,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    function __construct() {
+        $this->middleware('auth:sanctum')->only('store', 'update', 'destroy');
+    }
+
     public function index()
     {
         $products = product::all();
@@ -36,6 +42,8 @@ class ProductController extends Controller
         }
 
         $product = product::create($request->all());
+        $product->creator_id = Auth::id();
+        $product->save();
         // return response($product, 201);
         // return (new ProductResource($product))->response()->setStatusCode(201);
         return new ProductResource($product);
